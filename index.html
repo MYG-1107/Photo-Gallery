@@ -8,261 +8,196 @@
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
 
         :root {
-            --primary: #c9a66b;
-            --dark: #1a1a1a;
+            --gold: #c9a66b;
+            --dark: #0f0f0f;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f0f0f;
+            background: var(--dark);
             color: #ddd;
-            line-height: 1.6;
         }
 
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 15, 15, 0.95);
-            backdrop-filter: blur(10px);
+            top: 0; left: 0; right: 0;
+            background: rgba(15,15,15,0.95);
+            backdrop-filter: blur(12px);
             z-index: 1000;
-            padding: 1rem 5%;
+            padding: 1.2rem 6%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(201, 166, 107, 0.2);
+            border-bottom: 1px solid rgba(201,166,107,0.2);
         }
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            color: var(--gold);
             font-weight: 700;
-            color: var(--primary);
-            letter-spacing: 2px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
         }
 
         nav a {
             color: #ddd;
             text-decoration: none;
+            margin-left: 2rem;
             font-weight: 500;
-            transition: color 0.3s;
         }
 
-        nav a:hover {
-            color: var(--primary);
-        }
+        nav a:hover { color: var(--gold); }
 
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('assets/hero.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), 
+                        url('assets/hero.jpg') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            position: relative;
         }
 
-        .hero-content {
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .hero h1 {
+        .hero-content h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            margin-bottom: 1rem;
+            font-size: 4.8rem;
             color: white;
+            margin-bottom: 1rem;
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+        .hero-content p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
         }
 
         .btn {
-            display: inline-block;
-            padding: 14px 40px;
-            background: var(--primary);
+            padding: 16px 45px;
+            background: var(--gold);
             color: #111;
             font-weight: 600;
-            text-decoration: none;
             border-radius: 50px;
-            transition: all 0.4s;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.4s;
         }
 
         .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(201, 166, 107, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(201,166,107,0.4);
         }
 
-        .section {
-            padding: 100px 5%;
-        }
+        .section { padding: 120px 6%; }
 
         h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
             text-align: center;
+            font-size: 3.2rem;
             margin-bottom: 3rem;
             color: white;
         }
 
         .filters {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            text-align: center;
             margin-bottom: 3rem;
         }
 
         .filter-btn {
-            padding: 10px 25px;
+            padding: 12px 28px;
+            margin: 0 8px 12px;
             background: transparent;
-            border: 2px solid #444;
+            border: 2px solid #555;
             color: #ddd;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--primary);
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--gold);
             color: #111;
-            border-color: var(--primary);
+            border-color: var(--gold);
         }
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .gallery-item {
-            position: relative;
+            border-radius: 16px;
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: all 0.5s;
+            position: relative;
         }
 
         .gallery-item:hover {
-            transform: scale(1.05) rotate(1deg);
-            box-shadow: 0 25px 50px rgba(201, 166, 107, 0.2);
+            transform: scale(1.06) rotate(1.5deg);
         }
 
         .gallery-item img {
             width: 100%;
-            height: 100%;
+            height: 380px;
             object-fit: cover;
-            transition: transform 0.8s ease;
+            transition: 0.8s;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.15);
+            transform: scale(1.12);
         }
 
         .overlay {
             position: absolute;
             bottom: 0;
-            left: 0;
-            right: 0;
+            left: 0; right: 0;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 30px 20px 20px;
-            transform: translateY(40px);
-            transition: all 0.4s;
+            padding: 35px 20px 25px;
             opacity: 0;
+            transition: 0.4s;
         }
 
-        .gallery-item:hover .overlay {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .gallery-item:hover .overlay { opacity: 1; }
 
-        .overlay h3 {
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
+        .overlay h3 { color: var(--gold); margin-bottom: 6px; }
 
         /* Lightbox */
         .lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.97);
             z-index: 2000;
             align-items: center;
             justify-content: center;
         }
 
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90vh;
-            position: relative;
-        }
-
-        .lightbox-content img {
-            max-width: 100%;
-            max-height: 90vh;
+        .lightbox img {
+            max-width: 92%;
+            max-height: 92vh;
             border-radius: 12px;
-            box-shadow: 0 0 60px rgba(0,0,0,0.8);
+            box-shadow: 0 0 80px rgba(0,0,0,0.9);
         }
 
         .close {
             position: absolute;
-            top: -50px;
-            right: 0;
-            font-size: 40px;
-            color: #fff;
+            top: 30px;
+            right: 40px;
+            font-size: 45px;
+            color: white;
             cursor: pointer;
         }
-
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            font-size: 40px;
-            color: #fff;
-            background: rgba(0,0,0,0.5);
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .nav-btn:hover {
-            background: var(--primary);
-            color: #111;
-        }
-
-        .prev { left: 30px; }
-        .next { right: 30px; }
 
         footer {
-            background: #0a0a0a;
-            padding: 60px 5% 30px;
             text-align: center;
+            padding: 60px 20px 40px;
+            background: #0a0a0a;
             border-top: 1px solid #333;
         }
     </style>
@@ -272,21 +207,19 @@
     <header>
         <div class="logo">PIXORA</div>
         <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">For Photographers</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
+            <a href="#">Home</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#">Categories</a>
+            <a href="#">Photographers</a>
+            <a href="#">Upload</a>
         </nav>
     </header>
 
     <section class="hero">
         <div class="hero-content">
             <h1>Capturing Moments.<br>Creating Legacies.</h1>
-            <p>Premium photo gallery for weddings, anniversaries, birthdays &amp; unforgettable events</p>
-            <a href="#gallery" class="btn">Explore Galleries</a>
+            <p>Premium Photo Gallery for Weddings, Anniversaries, Birthdays &amp; Corporate Events</p>
+            <a href="#gallery" class="btn">Explore Collections</a>
         </div>
     </section>
 
@@ -301,77 +234,28 @@
             <button class="filter-btn" data-filter="event">Events</button>
         </div>
 
-        <div class="gallery" id="photoGallery">
-            <!-- Images will be populated by JavaScript -->
-        </div>
+        <div class="gallery" id="photoGallery"></div>
     </section>
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
-        <div class="lightbox-content">
-            <span class="close">&times;</span>
-            <img id="lightboxImage" src="" alt="">
-            <div class="nav-btn prev" id="prevBtn">←</div>
-            <div class="nav-btn next" id="nextBtn">→</div>
-        </div>
+        <span class="close">×</span>
+        <img id="lightboxImage" src="" alt="">
     </div>
 
     <footer>
-        <p>&copy; 2026 PIXORA • Premium Photo Gallery Platform</p>
-        <p>For Photographers &amp; Clients who value timeless memories</p>
+        <p><strong>PIXORA</strong> — Premium Photography Gallery Platform © 2026</p>
+        <p>For Business Clients & Professional Photographers</p>
     </footer>
 
     <script>
-        // Sample images - replace with your actual filenames in assets/
         const photos = [
-            {
-                src: "assets/wedding1.jpg",
-                category: "wedding",
-                title: "Eternal Vows",
-                desc: "Sacred union in golden hour"
-            },
-            {
-                src: "assets/anniversary1.jpg",
-                category: "anniversary",
-                title: "25 Years of Love",
-                desc: "Silver celebration"
-            },
-            {
-                src: "assets/birthday1.jpg",
-                category: "birthday",
-                title: "Little Princess Turns 5",
-                desc: "Magical garden party"
-            },
-            {
-                src: "assets/event1.jpg",
-                category: "event",
-                title: "Corporate Gala",
-                desc: "Elegance redefined"
-            },
-            {
-                src: "assets/wedding2.jpg",
-                category: "wedding",
-                title: "Destination Romance",
-                desc: "Beachside vows"
-            },
-            {
-                src: "assets/anniversary2.jpg",
-                category: "anniversary",
-                title: "Golden Jubilee",
-                desc: "50 years together"
-            },
-            {
-                src: "assets/birthday2.jpg",
-                category: "birthday",
-                title: "Adventures of 10",
-                desc: "Jungle theme birthday"
-            },
-            {
-                src: "assets/event2.jpg",
-                category: "event",
-                title: "Product Launch",
-                desc: "Modern elegance"
-            }
+            { src: "assets/wedding1.jpg", category: "wedding", title: "Eternal Vows", desc: "Golden hour wedding" },
+            { src: "assets/anniversary1.jpg", category: "anniversary", title: "25 Years of Love", desc: "Silver Jubilee" },
+            { src: "assets/birthday1.jpg", category: "birthday", title: "Magical 5th Birthday", desc: "Garden celebration" },
+            { src: "assets/event1.jpg", category: "event", title: "Corporate Gala Night", desc: "Elegant evening" },
+            { src: "assets/wedding2.jpg", category: "wedding", title: "Beachside Romance", desc: "Destination wedding" },
+            { src: "assets/anniversary2.jpg", category: "anniversary", title: "Golden Jubilee", desc: "50 Years Together" },
         ];
 
         function createGallery() {
@@ -379,98 +263,46 @@
             gallery.innerHTML = '';
 
             photos.forEach((photo, index) => {
-                const item = document.createElement('div');
-                item.className = `gallery-item`;
-                item.dataset.category = photo.category;
-                item.dataset.index = index;
-
-                item.innerHTML = `
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.dataset.category = photo.category;
+                div.innerHTML = `
                     <img src="${photo.src}" alt="${photo.title}">
                     <div class="overlay">
                         <h3>${photo.title}</h3>
                         <p>${photo.desc}</p>
                     </div>
                 `;
-
-                item.addEventListener('click', () => openLightbox(index));
-                gallery.appendChild(item);
+                div.onclick = () => openLightbox(index);
+                gallery.appendChild(div);
             });
         }
 
-        // Lightbox functionality
         let currentIndex = 0;
-
         function openLightbox(index) {
             currentIndex = index;
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightboxImage');
-            
-            lightboxImg.src = photos[index].src;
-            lightbox.style.display = 'flex';
+            document.getElementById('lightboxImage').src = photos[index].src;
+            document.getElementById('lightbox').style.display = 'flex';
         }
 
-        function closeLightbox() {
+        document.querySelector('.close').onclick = () => {
             document.getElementById('lightbox').style.display = 'none';
-        }
+        };
 
-        // Filter functionality
-        function setupFilters() {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
+        // Filter
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
 
-                    const filter = btn.dataset.filter;
-                    const items = document.querySelectorAll('.gallery-item');
-
-                    items.forEach(item => {
-                        if (filter === 'all') {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = item.dataset.category === filter ? 'block' : 'none';
-                        }
-                    });
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    item.style.display = (filter === 'all' || item.dataset.category === filter) ? 'block' : 'none';
                 });
             });
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            const lightbox = document.getElementById('lightbox');
-            if (lightbox.style.display !== 'flex') return;
-
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowRight') nextImage();
-            if (e.key === 'ArrowLeft') prevImage();
         });
 
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % photos.length;
-            document.getElementById('lightboxImage').src = photos[currentIndex].src;
-        }
-
-        function prevImage() {
-            currentIndex = (currentIndex - 1 + photos.length) % photos.length;
-            document.getElementById('lightboxImage').src = photos[currentIndex].src;
-        }
-
-        // Initialize everything
-        window.onload = function() {
-            createGallery();
-            setupFilters();
-
-            // Lightbox controls
-            document.querySelector('.close').addEventListener('click', closeLightbox);
-            document.getElementById('nextBtn').addEventListener('click', nextImage);
-            document.getElementById('prevBtn').addEventListener('click', prevImage);
-
-            // Close lightbox when clicking outside image
-            document.getElementById('lightbox').addEventListener('click', (e) => {
-                if (e.target.id === 'lightbox') closeLightbox();
-            });
-        };
+        window.onload = createGallery;
     </script>
 </body>
 </html>
