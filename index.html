@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Gallery</title>
+    <title>PIXORA | Premium Photography</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
 
         :root {
             --gold: #c9a66b;
-            --dark: #0f0f0f;
+            --gold-soft: rgba(201, 166, 107, 0.2);
+            --dark: #0b0b0b;
+            --dark-soft: #151515;
+            --text: #f5f0e6;
+            --muted: #b7b1a6;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,7 +21,8 @@
         body {
             font-family: 'Inter', sans-serif;
             background: var(--dark);
-            color: #ddd;
+            color: var(--text);
+            line-height: 1.6;
         }
 
         header {
@@ -26,11 +31,12 @@
             background: rgba(15,15,15,0.95);
             backdrop-filter: blur(12px);
             z-index: 1000;
-            padding: 1.2rem 6%;
+            padding: 1.4rem 6%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(201,166,107,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
         }
 
         .logo {
@@ -38,38 +44,71 @@
             font-size: 2.2rem;
             color: var(--gold);
             font-weight: 700;
+            letter-spacing: 0.12em;
         }
 
         nav a {
-            color: #ddd;
+            color: var(--muted);
             text-decoration: none;
             margin-left: 2rem;
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.78rem;
         }
 
         nav a:hover { color: var(--gold); }
 
         .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), 
-                        url('assets/hero.jpg') center/cover no-repeat;
+            min-height: 100vh;
+            background: url('A01A8129.JPG') center/cover no-repeat;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            padding: 0 8%;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(6,6,6,0.9) 5%, rgba(6,6,6,0.45) 45%, rgba(6,6,6,0.85) 100%);
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(201,166,107,0.22), transparent 55%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            padding-top: 120px;
+            text-align: left;
         }
 
         .hero-content h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4.8rem;
+            font-size: clamp(3.2rem, 5vw, 5.4rem);
             color: white;
             margin-bottom: 1rem;
+            line-height: 1.05;
+            text-shadow: 0 20px 40px rgba(0,0,0,0.55);
         }
 
         .hero-content p {
-            font-size: 1.4rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
+            font-size: 1.25rem;
+            max-width: 640px;
+            margin: 0 0 2.4rem;
+            color: var(--muted);
+            text-shadow: 0 12px 24px rgba(0,0,0,0.5);
         }
 
         .btn {
@@ -81,6 +120,7 @@
             text-decoration: none;
             display: inline-block;
             transition: 0.4s;
+            letter-spacing: 0.04em;
         }
 
         .btn:hover {
@@ -88,30 +128,35 @@
             box-shadow: 0 20px 40px rgba(201,166,107,0.4);
         }
 
-        .section { padding: 120px 6%; }
+        .section { padding: 120px 6% 140px; }
+
+        #gallery { scroll-margin-top: 120px; }
 
         h2 {
             font-family: 'Playfair Display', serif;
             text-align: center;
-            font-size: 3.2rem;
-            margin-bottom: 3rem;
+            font-size: clamp(2.4rem, 4vw, 3.4rem);
+            margin-bottom: 2.5rem;
             color: white;
         }
 
         .filters {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
             margin-bottom: 3rem;
         }
 
         .filter-btn {
             padding: 12px 28px;
-            margin: 0 8px 12px;
-            background: transparent;
-            border: 2px solid #555;
-            color: #ddd;
+            background: rgba(201,166,107,0.08);
+            border: 1px solid rgba(201,166,107,0.4);
+            color: var(--text);
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
+            font-weight: 500;
         }
 
         .filter-btn.active,
@@ -123,48 +168,79 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            grid-auto-rows: 90px;
+            grid-auto-flow: dense;
+            gap: 24px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .gallery-item {
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            transition: all 0.5s;
+            box-shadow: 0 18px 45px rgba(0,0,0,0.55);
+            transition: all 0.4s ease;
             position: relative;
+            background: #101010;
+        }
+
+        .gallery-item::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(12,12,12,0) 5%, rgba(201,166,107,0.35) 60%, rgba(5,5,5,0.92) 100%);
+            opacity: 0;
+            transition: 0.4s ease;
+            z-index: 1;
         }
 
         .gallery-item:hover {
-            transform: scale(1.06) rotate(1.5deg);
+            transform: translateY(-10px);
         }
+
+        .gallery-item:hover::after { opacity: 1; }
 
         .gallery-item img {
             width: 100%;
-            height: 380px;
+            height: 100%;
             object-fit: cover;
             transition: 0.8s;
+            position: relative;
+            z-index: 0;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.12);
+            transform: scale(1.08);
         }
+
+        .gallery-item--xl { grid-column: span 7; grid-row: span 5; }
+        .gallery-item--lg { grid-column: span 5; grid-row: span 4; }
+        .gallery-item--md { grid-column: span 4; grid-row: span 3; }
+        .gallery-item--sm { grid-column: span 3; grid-row: span 2; }
 
         .overlay {
             position: absolute;
-            bottom: 0;
-            left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 35px 20px 25px;
+            inset: auto 0 0 0;
+            padding: 32px 24px 26px;
             opacity: 0;
             transition: 0.4s;
+            z-index: 2;
         }
 
         .gallery-item:hover .overlay { opacity: 1; }
 
-        .overlay h3 { color: var(--gold); margin-bottom: 6px; }
+        .overlay h3 {
+            color: var(--gold);
+            margin-bottom: 6px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+        }
+
+        .overlay p {
+            color: #f2e9d7;
+            font-size: 0.95rem;
+        }
 
         /* Lightbox */
         .lightbox {
@@ -199,6 +275,47 @@
             padding: 60px 20px 40px;
             background: #0a0a0a;
             border-top: 1px solid #333;
+            color: var(--muted);
+        }
+
+        @media (max-width: 1100px) {
+            .gallery {
+                grid-template-columns: repeat(8, minmax(0, 1fr));
+                grid-auto-rows: 85px;
+            }
+
+            .gallery-item--xl { grid-column: span 8; }
+            .gallery-item--lg { grid-column: span 5; }
+            .gallery-item--md,
+            .gallery-item--sm { grid-column: span 4; }
+        }
+
+        @media (max-width: 860px) {
+            nav { display: none; }
+            header { justify-content: center; }
+            .hero { padding: 0 6%; }
+            .gallery {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                grid-auto-rows: 90px;
+            }
+
+            .gallery-item--xl,
+            .gallery-item--lg,
+            .gallery-item--md,
+            .gallery-item--sm { grid-column: span 4; grid-row: span 3; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero-content p { font-size: 1.05rem; }
+            .gallery {
+                grid-template-columns: 1fr;
+                grid-auto-rows: 260px;
+            }
+            .gallery-item--xl,
+            .gallery-item--lg,
+            .gallery-item--md,
+            .gallery-item--sm { grid-column: span 1; grid-row: span 1; }
         }
     </style>
 </head>
@@ -250,12 +367,14 @@
 
     <script>
         const photos = [
-            { src: "A01A8129.JPG", category: "wedding", title: "Eternal Vows", desc: "Golden hour wedding" },
-            { src: "A01A8211.JPG", category: "anniversary", title: "25 Years of Love", desc: "Silver Jubilee" },
-            { src: "A01A8212.JPG", category: "birthday", title: "Magical 5th Birthday", desc: "Garden celebration" },
-            { src: "A01A8242.JPG", category: "event", title: "Corporate Gala Night", desc: "Elegant evening" },
-            { src: "assets/wedding2.jpg", category: "wedding", title: "Beachside Romance", desc: "Destination wedding" },
-            { src: "assets/anniversary2.jpg", category: "anniversary", title: "Golden Jubilee", desc: "50 Years Together" },
+            { src: "A01A8129.JPG", category: "wedding", size: "xl", title: "Golden Hour Vows", desc: "Indian wedding portrait at sunset" },
+            { src: "A01A8211.JPG", category: "anniversary", size: "lg", title: "Timeless Together", desc: "Romantic anniversary session" },
+            { src: "A01A8212.JPG", category: "birthday", size: "sm", title: "Joyful Fifth Year", desc: "Children's birthday celebration" },
+            { src: "A01A8242.JPG", category: "event", size: "md", title: "Executive Gala", desc: "Corporate black-tie soirée" },
+            { src: "https://images.unsplash.com/photo-1523437237267-4a1682c10d86?auto=format&fit=crop&w=1200&q=80", category: "wedding", size: "md", title: "Sacred Traditions", desc: "Ceremonial wedding moments" },
+            { src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80", category: "anniversary", size: "sm", title: "Silver Jubilee", desc: "Legacy of love and laughter" },
+            { src: "https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1200&q=80", category: "birthday", size: "md", title: "Festive Glow", desc: "Cake, candles, and cheers" },
+            { src: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80", category: "event", size: "sm", title: "Signature Events", desc: "Elegant corporate celebrations" },
         ];
 
         function createGallery() {
@@ -264,7 +383,7 @@
 
             photos.forEach((photo, index) => {
                 const div = document.createElement('div');
-                div.className = 'gallery-item';
+                div.className = `gallery-item gallery-item--${photo.size}`;
                 div.dataset.category = photo.category;
                 div.innerHTML = `
                     <img src="${photo.src}" alt="${photo.title}">
