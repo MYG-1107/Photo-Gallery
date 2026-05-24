@@ -3,425 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIXORA | Premium Photography</title>
+    <title>My Photo Gallery</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
-
         :root {
-            --gold: #c9a66b;
-            --gold-soft: rgba(201, 166, 107, 0.2);
-            --dark: #0b0b0b;
-            --dark-soft: #151515;
-            --text: #f5f0e6;
-            --muted: #b7b1a6;
+            --bg: #0f0f0f;
+            --card: #1b1b1b;
+            --text: #f5f5f5;
+            --muted: #bdbdbd;
+            --accent: #c9a66b;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark);
+            font-family: "Inter", "Segoe UI", sans-serif;
+            background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(15,15,15,0.95);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            padding: 1.4rem 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(201,166,107,0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: var(--gold);
-            font-weight: 700;
-            letter-spacing: 0.12em;
-        }
-
-        nav a {
-            color: var(--muted);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            font-size: 0.78rem;
-        }
-
-        nav a:hover { color: var(--gold); }
-
-        .hero {
             min-height: 100vh;
-            background: url('A01A8129.JPG') center/cover no-repeat;
             display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            padding: 0 8%;
-            position: relative;
-            overflow: hidden;
-            isolation: isolate;
+            justify-content: center;
+            text-align: center;
+            gap: 20px;
+            padding: 80px 20px 40px;
         }
 
-        .hero::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, rgba(6,6,6,0.9) 5%, rgba(6,6,6,0.45) 45%, rgba(6,6,6,0.85) 100%);
-            z-index: 0;
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 20% 20%, rgba(201,166,107,0.22), transparent 55%);
-            z-index: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 720px;
-            padding-top: 120px;
-            text-align: left;
-        }
-
-        .hero-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3.2rem, 5vw, 5.4rem);
-            color: white;
-            margin-bottom: 1rem;
-            line-height: 1.05;
-            text-shadow: 0 20px 40px rgba(0,0,0,0.55);
-        }
-
-        .hero-content p {
-            font-size: 1.25rem;
-            max-width: 640px;
-            margin: 0 0 2.4rem;
-            color: var(--muted);
-            text-shadow: 0 12px 24px rgba(0,0,0,0.5);
-        }
-
-        .btn {
-            padding: 16px 45px;
-            background: var(--gold);
-            color: #111;
-            font-weight: 600;
-            border-radius: 50px;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.4s;
+        h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
             letter-spacing: 0.04em;
         }
 
-        .btn:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(201,166,107,0.4);
+        p {
+            color: var(--muted);
+            max-width: 520px;
         }
 
-        .section { padding: 120px 6% 140px; }
-
-        #gallery { scroll-margin-top: 120px; }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            text-align: center;
-            font-size: clamp(2.4rem, 4vw, 3.4rem);
-            margin-bottom: 2.5rem;
-            color: white;
-        }
-
-        .filters {
+        .nav-links {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 3rem;
-        }
-
-        .filter-btn {
-            padding: 12px 28px;
-            background: rgba(201,166,107,0.08);
-            border: 1px solid rgba(201,166,107,0.4);
-            color: var(--text);
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: 500;
-        }
-
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--gold);
-            color: #111;
-            border-color: var(--gold);
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(12, minmax(0, 1fr));
-            grid-auto-rows: 90px;
-            grid-auto-flow: dense;
-            gap: 24px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .gallery-item {
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 18px 45px rgba(0,0,0,0.55);
-            transition: all 0.4s ease;
-            position: relative;
-            background: #101010;
-        }
-
-        .gallery-item::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(12,12,12,0) 5%, rgba(201,166,107,0.35) 60%, rgba(5,5,5,0.92) 100%);
-            opacity: 0;
-            transition: 0.4s ease;
-            z-index: 1;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .gallery-item:hover::after { opacity: 1; }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.8s;
-            position: relative;
-            z-index: 0;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.08);
-        }
-
-        .gallery-item--xl { grid-column: span 7; grid-row: span 5; }
-        .gallery-item--lg { grid-column: span 5; grid-row: span 4; }
-        .gallery-item--md { grid-column: span 4; grid-row: span 3; }
-        .gallery-item--sm { grid-column: span 3; grid-row: span 2; }
-
-        .overlay {
-            position: absolute;
-            inset: auto 0 0 0;
-            padding: 32px 24px 26px;
-            opacity: 0;
-            transition: 0.4s;
-            z-index: 2;
-        }
-
-        .gallery-item:hover .overlay { opacity: 1; }
-
-        .overlay h3 {
-            color: var(--gold);
-            margin-bottom: 6px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-        }
-
-        .overlay p {
-            color: #f2e9d7;
-            font-size: 0.95rem;
-        }
-
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.97);
-            z-index: 2000;
-            align-items: center;
             justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
         }
 
-        .lightbox img {
-            max-width: 92%;
-            max-height: 92vh;
-            border-radius: 12px;
-            box-shadow: 0 0 80px rgba(0,0,0,0.9);
+        .nav-card {
+            text-decoration: none;
+            color: var(--text);
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 26px 30px;
+            border-radius: 14px;
+            min-width: 220px;
+            transition: transform 0.2s ease, border 0.2s ease;
         }
 
-        .close {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            font-size: 45px;
-            color: white;
-            cursor: pointer;
+        .nav-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+        }
+
+        .nav-card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+
+        .nav-card span {
+            color: var(--muted);
+            font-size: 0.95rem;
         }
 
         footer {
             text-align: center;
-            padding: 60px 20px 40px;
-            background: #0a0a0a;
-            border-top: 1px solid #333;
+            padding: 18px 12px;
+            font-size: 0.85rem;
             color: var(--muted);
-        }
-
-        @media (max-width: 1100px) {
-            .gallery {
-                grid-template-columns: repeat(8, minmax(0, 1fr));
-                grid-auto-rows: 85px;
-            }
-
-            .gallery-item--xl { grid-column: span 8; }
-            .gallery-item--lg { grid-column: span 5; }
-            .gallery-item--md,
-            .gallery-item--sm { grid-column: span 4; }
-        }
-
-        @media (max-width: 860px) {
-            nav { display: none; }
-            header { justify-content: center; }
-            .hero { padding: 0 6%; }
-            .gallery {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
-                grid-auto-rows: 90px;
-            }
-
-            .gallery-item--xl,
-            .gallery-item--lg,
-            .gallery-item--md,
-            .gallery-item--sm { grid-column: span 4; grid-row: span 3; }
-        }
-
-        @media (max-width: 600px) {
-            .hero-content h1 { font-size: 2.8rem; }
-            .hero-content p { font-size: 1.05rem; }
-            .gallery {
-                grid-template-columns: 1fr;
-                grid-auto-rows: 260px;
-            }
-            .gallery-item--xl,
-            .gallery-item--lg,
-            .gallery-item--md,
-            .gallery-item--sm { grid-column: span 1; grid-row: span 1; }
+            border-top: 1px solid #242424;
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo">PIXORA</div>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#">Categories</a>
-            <a href="#">Photographers</a>
-            <a href="#">Upload</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Capturing Moments.<br>Creating Legacies.</h1>
-            <p>Premium Photo Gallery for Weddings, Anniversaries, Birthdays &amp; Corporate Events</p>
-            <a href="#gallery" class="btn">Explore Collections</a>
+    <main>
+        <h1>My Photo Gallery</h1>
+        <p>Welcome to my personal space. Choose a gallery below to view my memories or achievements.</p>
+        <div class="nav-links">
+            <a class="nav-card" href="personal/">
+                <h2>Personal Photos</h2>
+                <span>Family, travel, and everyday moments.</span>
+            </a>
+            <a class="nav-card" href="achivements/">
+                <h2>Achievements</h2>
+                <span>Certificates, awards, and recognition.</span>
+            </a>
         </div>
-    </section>
-
-    <section class="section" id="gallery">
-        <h2>Our Visual Stories</h2>
-
-        <div class="filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="wedding">Weddings</button>
-            <button class="filter-btn" data-filter="anniversary">Anniversaries</button>
-            <button class="filter-btn" data-filter="birthday">Birthdays</button>
-            <button class="filter-btn" data-filter="event">Events</button>
-        </div>
-
-        <div class="gallery" id="photoGallery"></div>
-    </section>
-
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <span class="close">×</span>
-        <img id="lightboxImage" src="" alt="">
-    </div>
+    </main>
 
     <footer>
-        <p><strong>PIXORA</strong> — Premium Photography Gallery Platform © 2026</p>
-        <p>For Business Clients & Professional Photographers</p>
+        <p>© 2026 My Photo Gallery</p>
     </footer>
-
-    <script>
-        const photos = [
-            { src: "A01A8129.JPG", category: "wedding", size: "xl", title: "Golden Hour Vows", desc: "Indian wedding portrait at sunset" },
-            { src: "A01A8211.JPG", category: "anniversary", size: "lg", title: "Timeless Together", desc: "Romantic anniversary session" },
-            { src: "A01A8212.JPG", category: "birthday", size: "sm", title: "Joyful Fifth Year", desc: "Children's birthday celebration" },
-            { src: "A01A8242.JPG", category: "event", size: "md", title: "Executive Gala", desc: "Corporate black-tie soirée" },
-            { src: "https://images.unsplash.com/photo-1523437237267-4a1682c10d86?auto=format&fit=crop&w=1200&q=80", category: "wedding", size: "md", title: "Sacred Traditions", desc: "Ceremonial wedding moments" },
-            { src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80", category: "anniversary", size: "sm", title: "Silver Jubilee", desc: "Legacy of love and laughter" },
-            { src: "https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1200&q=80", category: "birthday", size: "md", title: "Festive Glow", desc: "Cake, candles, and cheers" },
-            { src: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80", category: "event", size: "sm", title: "Signature Events", desc: "Elegant corporate celebrations" },
-        ];
-
-        function createGallery() {
-            const gallery = document.getElementById('photoGallery');
-            gallery.innerHTML = '';
-
-            photos.forEach((photo, index) => {
-                const div = document.createElement('div');
-                div.className = `gallery-item gallery-item--${photo.size}`;
-                div.dataset.category = photo.category;
-                div.innerHTML = `
-                    <img src="${photo.src}" alt="${photo.title}">
-                    <div class="overlay">
-                        <h3>${photo.title}</h3>
-                        <p>${photo.desc}</p>
-                    </div>
-                `;
-                div.onclick = () => openLightbox(index);
-                gallery.appendChild(div);
-            });
-        }
-
-        let currentIndex = 0;
-        function openLightbox(index) {
-            currentIndex = index;
-            document.getElementById('lightboxImage').src = photos[index].src;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
-
-        document.querySelector('.close').onclick = () => {
-            document.getElementById('lightbox').style.display = 'none';
-        };
-
-        // Filter
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const filter = btn.dataset.filter;
-                document.querySelectorAll('.gallery-item').forEach(item => {
-                    item.style.display = (filter === 'all' || item.dataset.category === filter) ? 'block' : 'none';
-                });
-            });
-        });
-
-        window.onload = createGallery;
-    </script>
 </body>
 </html>
